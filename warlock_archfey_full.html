@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Thornwhisper — Warlock · Archfey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-serif: 'Crimson Pro', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --accent: #7c3aed;
+      --accent-light: #f5f3ff;
+      --resource-border: #c4b5fd;
+      --border: #e2e2e2;
+      --border-strong: #cccccc;
+      --text-primary: #111111;
+      --text-secondary: #444444;
+      --text-muted: #999999;
+      --bg-card: #f9f9f9;
+      --bg-general: #f4f4f4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #ebebeb; font-family: var(--font-sans); padding: 24px; display: flex; flex-direction: column; gap: 24px; align-items: center; }
+    .page { background: #ffffff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); padding: 26px; width: 100%; max-width: 680px; }
+    .section-label { font-family: var(--font-sans); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+    .header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1.5px solid var(--accent); }
+    .icon-box { width: 52px; height: 52px; border-radius: 8px; background: var(--accent-light); border: 1px solid var(--resource-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sub-tag { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+    .char-name { font-family: var(--font-serif); font-size: 24px; font-weight: 500; color: var(--text-primary); line-height: 1.2; }
+    .flavour { font-family: var(--font-serif); font-size: 12.5px; font-style: italic; line-height: 1.5; color: #666666; margin-top: 3px; }
+    .vitals { text-align: right; flex-shrink: 0; }
+    .vital-label { font-family: var(--font-sans); font-size: 10px; color: var(--text-muted); }
+    .vital-num { font-family: var(--font-sans); font-size: 26px; font-weight: 500; color: var(--text-primary); line-height: 1.1; }
+    .stat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 14px; }
+    .stat-box { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 6px; padding: 6px 4px; text-align: center; }
+    .stat-lbl { font-family: var(--font-sans); font-size: 9px; color: var(--accent); margin-bottom: 1px; }
+    .stat-val { font-family: var(--font-sans); font-size: 17px; font-weight: 500; color: var(--text-primary); }
+    .action-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+    .action-col { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 9px 11px; }
+    .action-col-title { font-family: var(--font-sans); font-size: 10px; font-weight: 500; color: var(--accent); margin-bottom: 6px; }
+    .action-items { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.8; }
+    .action-items.general { font-size: 10.5px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 6px; padding-top: 6px; }
+    .resource-box { background: var(--accent-light); border: 0.5px solid var(--resource-border); border-radius: 8px; padding: 10px 12px; }
+    .resource-label { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: var(--text-primary); }
+    .resource-desc { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+    .dot-row { display: flex; gap: 6px; margin-top: 8px; }
+    .dot { width: 17px; height: 17px; border-radius: 50%; border: 1.5px solid var(--accent); background: transparent; }
+    .hp-field { display: flex; align-items: baseline; gap: 6px; margin-top: 8px; }
+    .hp-line { display: inline-block; width: 80px; border-bottom: 1.5px solid #999; height: 20px; }
+    .hp-denom { font-family: var(--font-sans); font-size: 13px; color: var(--text-secondary); }
+    .ability-row { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 9px 11px; margin-bottom: 6px; }
+    .ability-row.general { background: var(--bg-general); border-color: var(--border); }
+    .ability-title { font-family: var(--font-sans); font-size: 12px; font-weight: 500; color: var(--text-primary); }
+    .ability-tag { font-family: var(--font-sans); font-size: 10px; font-weight: 400; color: var(--accent); margin-left: 6px; }
+    .ability-row.general .ability-tag { color: var(--text-muted); }
+    .ability-desc { font-family: var(--font-sans); font-size: 11px; line-height: 1.55; color: var(--text-secondary); margin-top: 3px; }
+    .ability-row.general .ability-title { color: #555555; }
+    .ability-row.general .ability-desc { color: var(--text-muted); }
+    .page-header { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .page-header span { color: var(--accent); }
+    @page { size: A4; margin: 0; }
+    @media print {
+      body { background: white; padding: 0; gap: 0; }
+      .page { page-break-after: always; border-radius: 0; box-shadow: none; max-width: 100%; width: 210mm; min-height: 297mm; padding: 14mm 16mm; }
+      .page:last-child { page-break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="header">
+      <div class="icon-box">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3c1.5 2.5 4 3 4 6a4 4 0 01-8 0c0-3 2.5-3.5 4-6z"/>
+          <path d="M12 13v8"/>
+          <path d="M8 17l4 2 4-2"/>
+          <circle cx="7" cy="8" r="1.5"/>
+          <circle cx="17" cy="6" r="1.5"/>
+          <circle cx="5" cy="14" r="1"/>
+          <circle cx="19" cy="12" r="1"/>
+        </svg>
+      </div>
+      <div style="flex:1;">
+        <div class="sub-tag">Warlock · The Archfey</div>
+        <div class="char-name">The Thornwhisper</div>
+        <div class="flavour">"The fey court does not grant wishes. It grants debts, dressed up in moonlight."</div>
+      </div>
+      <div class="vitals">
+        <div class="vital-label">AC</div>
+        <div class="vital-num">13</div>
+        <div class="vital-label" style="margin-top: 6px;">Spell DC 14</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-lbl">STR</div><div class="stat-val">−1</div></div>
+      <div class="stat-box"><div class="stat-lbl">DEX</div><div class="stat-val">+3</div></div>
+      <div class="stat-box"><div class="stat-lbl">CON</div><div class="stat-val">+1</div></div>
+      <div class="stat-box"><div class="stat-lbl">INT</div><div class="stat-val">+1</div></div>
+      <div class="stat-box"><div class="stat-lbl">WIS</div><div class="stat-val">+2</div></div>
+      <div class="stat-box"><div class="stat-lbl">CHA</div><div class="stat-val">+4</div></div>
+    </div>
+
+    <hr>
+    <div class="section-label">Gear</div>
+    <div style="font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px;">Leather armour &middot; Dagger &middot; Vespertine (fey familiar, see abilities)</div>
+
+    <hr>
+    <div class="section-label">Action Economy</div>
+    <div class="action-grid">
+      <div class="action-col">
+        <div class="action-col-title">⚔ Action</div>
+        <div class="action-items">Eldritch Blast<br>Hypnotic Pattern<br>Hold Person<br>Dagger</div>
+        <div class="action-items general">Dash &middot; Dodge<br>Disengage &middot; Help &middot; Hide</div>
+      </div>
+      <div class="action-col">
+        <div class="action-col-title">◈ Bonus</div>
+        <div class="action-items">Misty Step<br>Vespertine's Errand</div>
+      </div>
+      <div class="action-col">
+        <div class="action-col-title">↺ Reaction</div>
+        <div class="action-items">Beguiling Defenses</div>
+        <div class="action-items general">Opportunity Attack</div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="section-label">Spells per day</div>
+    <div class="resource-box">
+      <div class="resource-desc">Cross off a circle each time you cast a spell. Recover on a long rest.</div>
+      <div class="dot-row">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="section-label">Current HP</div>
+    <div class="hp-field">
+      <div class="hp-line"></div>
+      <div class="hp-denom">/ 48</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-header"><span>The Thornwhisper</span> &nbsp;&middot;&nbsp; Warlock · Archfey &nbsp;&middot;&nbsp; Abilities</div>
+
+    <div class="section-label">Class Abilities</div>
+
+    <div class="ability-row">
+      <div class="ability-title">Eldritch Blast <span class="ability-tag">Action &middot; at will</span></div>
+      <div class="ability-desc">Hurl a beam of fey starlight at one creature within 120ft. Roll D20 + CHA vs AC to hit. On a hit, deal 2D10 force damage. The target makes a WIS save (DC 14) or is frightened of you until the end of their next turn.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Beguiling Defenses <span class="ability-tag">Reaction &middot; when a charm effect is used nearby</span></div>
+      <div class="ability-desc">When a creature tries to charm you or an ally within 60ft, you may react to turn the effect back on the caster. They make a WIS save (DC 14) or become charmed by you for 1 minute instead.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Hypnotic Pattern <span class="ability-tag">Action &middot; costs 1 spell &middot; concentration</span></div>
+      <div class="ability-desc">A swirling pattern of fey colours fills a 30ft cube within 120ft. Every creature in the area makes a WIS save (DC 14) or becomes incapacitated with speed 0 for 1 minute. The effect ends for a creature that takes damage or is shaken free by an ally's action.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Hold Person <span class="ability-tag">Action &middot; costs 1 spell &middot; concentration</span></div>
+      <div class="ability-desc">Point at one humanoid within 60ft. They make a WIS save (DC 14) or are paralysed for 1 minute. A paralysed creature automatically fails STR and DEX saves, and all attacks against them have advantage. They repeat the save at the end of each of their turns.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Misty Step <span class="ability-tag">Bonus Action &middot; costs 1 spell</span></div>
+      <div class="ability-desc">Vanish in a shimmer of silver mist and reappear in any unoccupied space you can see within 30ft. You can use this even when surrounded.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Vespertine's Errand <span class="ability-tag">Bonus Action</span></div>
+      <div class="ability-desc">Direct Vespertine to move up to 40ft and do one of the following: deliver a touch spell you have just cast; retrieve or drop a small object; or scout an adjacent room and report back. If Vespertine is destroyed, resummon them after a long rest.</div>
+    </div>
+
+    <hr>
+    <div class="section-label">Weapons</div>
+
+    <div class="ability-row">
+      <div class="ability-title">Dagger <span class="ability-tag">Action &middot; melee 5ft or thrown 20/60ft</span></div>
+      <div class="ability-desc">Roll D20 + DEX vs AC to hit. On a hit, deal 1D4 + DEX piercing damage. Thrown beyond 20ft is at disadvantage.</div>
+    </div>
+
+    <hr>
+    <div class="section-label">General Combat Actions</div>
+
+    <div class="ability-row general">
+      <div class="ability-title">Dash <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Gain an extra 30ft of movement this turn.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Dodge <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Until your next turn, attacks against you have disadvantage and you have advantage on DEX saves.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Disengage <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Your movement does not provoke opportunity attacks for the rest of this turn.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Opportunity Attack <span class="ability-tag">Reaction &middot; when an enemy leaves your reach</span></div>
+      <div class="ability-desc">Make one dagger attack: D20 + DEX vs AC, 1D4 + DEX on a hit. Triggered when a creature moves out of your reach without Disengaging.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Help <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Give an ally advantage on their next ability check (within 5ft), or on their next attack against a creature within 5ft of you.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Hide <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Roll DEX (Stealth). If you succeed and are out of direct sight, you become hidden. Attacks against hidden targets are at disadvantage.</div>
+    </div>
+  </div>
+
+</body>
+</html>
