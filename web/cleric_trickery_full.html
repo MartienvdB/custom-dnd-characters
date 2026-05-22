@@ -92,18 +92,18 @@
       </div>
       <div class="vitals">
         <div class="vital-label">AC</div>
-        <div class="vital-num">13</div>
+        <div class="vital-num">14</div>
         <div class="vital-label" style="margin-top: 6px;">Spell DC 14</div>
       </div>
     </div>
 
     <div class="stat-grid">
       <div class="stat-box"><div class="stat-lbl">STR</div><div class="stat-val">+0</div></div>
-      <div class="stat-box"><div class="stat-lbl">DEX</div><div class="stat-val">+2</div></div>
+      <div class="stat-box"><div class="stat-lbl">DEX</div><div class="stat-val">+3</div></div>
       <div class="stat-box"><div class="stat-lbl">CON</div><div class="stat-val">+2</div></div>
       <div class="stat-box"><div class="stat-lbl">INT</div><div class="stat-val">+1</div></div>
       <div class="stat-box"><div class="stat-lbl">WIS</div><div class="stat-val">+3</div></div>
-      <div class="stat-box"><div class="stat-lbl">CHA</div><div class="stat-val">+2</div></div>
+      <div class="stat-box"><div class="stat-lbl">CHA</div><div class="stat-val">+1</div></div>
     </div>
 
     <hr>
@@ -115,7 +115,7 @@
     <div class="action-grid">
       <div class="action-col">
         <div class="action-col-title">⚔ Action</div>
-        <div class="action-items">Charm Person<br>Hold Person<br>Hypnotic Pattern<br>Invoke Duplicity<br>Dagger &middot; Shortbow</div>
+        <div class="action-items">Toll the Dead (at will)<br>Inflict Wounds<br>Blindness<br>Invisibility<br>Bane<br>Invoke Duplicity<br>Dagger &middot; Shortbow</div>
         <div class="action-items general">Dash &middot; Dodge<br>Disengage &middot; Help &middot; Hide</div>
       </div>
       <div class="action-col">
@@ -156,37 +156,43 @@
   <div class="page">
     <div class="page-header"><span>The Veil</span> &nbsp;&middot;&nbsp; Cleric · Trickery &nbsp;&middot;&nbsp; Abilities</div>
 
-    <div class="section-label">Class Abilities</div>
+        <div class="section-label">Class Abilities</div>
+
+    <div class="ability-row">
+      <div class="ability-title">Toll the Dead <span class="ability-tag">Action &middot; at will &middot; range 60ft</span></div>
+      <div class="ability-desc">Target a creature you can see. It makes a WIS save (DC 14) or takes 1D8 necrotic damage &mdash; or 1D12 if the target is already missing any hit points. No attack roll needed.</div>
+    </div>
 
     <div class="ability-row">
       <div class="ability-title">Healing Word <span class="ability-tag">Bonus Action &middot; costs 1 spell &middot; range 60ft</span></div>
-      <div class="ability-desc">One creature you can see regains 2D4 + WIS hit points. You can still take your full action this turn. This isn't your focus — save it for when an ally is about to go down.</div>
+      <div class="ability-desc">One creature you can see regains 2D4 + WIS hit points. You can still take your full action this turn. This isn&rsquo;t your focus &mdash; save it for when an ally is about to go down.</div>
     </div>
 
     <div class="ability-row">
-      <div class="ability-title">Charm Person <span class="ability-tag">Action &middot; costs 1 spell &middot; range 30ft</span></div>
-      <div class="ability-desc">One humanoid makes a WIS save (DC 14) or regards you as a friendly acquaintance for 1 hour. They will not attack you and are disposed to help you. They know they were charmed once the effect ends.</div>
+      <div class="ability-title">Invisibility <span class="ability-tag">Action &middot; costs 1 spell &middot; concentration &middot; touch</span></div>
+      <div class="ability-desc">You or one willing creature you touch becomes invisible until they attack or cast a spell. Use this to close the distance undetected before striking with Inflict Wounds, or to pull an ally out of danger.</div>
     </div>
 
     <div class="ability-row">
-      <div class="ability-title">Hold Person <span class="ability-tag">Action &middot; costs 1 spell &middot; concentration &middot; range 60ft</span></div>
-      <div class="ability-desc">One humanoid makes a WIS save (DC 14) or is paralysed for 1 minute. Paralysed creatures automatically fail STR and DEX saves, and all attacks against them have advantage. They repeat the save at the end of each of their turns.</div>
+      <div class="ability-title">Inflict Wounds <span class="ability-tag">Action &middot; costs 1 spell &middot; touch</span></div>
+      <div class="ability-desc">Make a melee spell attack: roll D20 + WIS vs AC. On a hit, deal 3D10 necrotic damage. Use Invisibility first to close the distance &mdash; invisible attackers have advantage on the attack roll.</div>
     </div>
 
     <div class="ability-row">
-      <div class="ability-title">Hypnotic Pattern <span class="ability-tag">Action &middot; costs 1 spell &middot; concentration &middot; range 120ft</span></div>
-      <div class="ability-desc">A twisting pattern fills a 30ft cube. Every creature in the area makes a WIS save (DC 14) or becomes incapacitated with speed 0 for 1 minute. The effect ends for a creature that takes damage or is shaken free by an ally's action.</div>
+      <div class="ability-title">Blindness <span class="ability-tag">Action &middot; costs 1 spell &middot; range 30ft</span></div>
+      <div class="ability-desc">One creature makes a CON save (DC 14) or is blinded for 1 minute. A blinded creature attacks at disadvantage, and all attacks against it have advantage. They repeat the save at the end of each of their turns.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Bane <span class="ability-tag">Action &middot; costs 1 spell &middot; concentration &middot; range 30ft</span></div>
+      <div class="ability-desc">Up to 3 creatures within 30ft make CHA saves (DC 14) or subtract 1D4 from all attack rolls and saving throws for 1 minute. The mirror of Bless &mdash; cast this when the enemy has the upper hand.</div>
     </div>
 
     <div class="ability-row">
       <div class="ability-title">Invoke Duplicity <span class="ability-tag">Action &middot; Channel Divinity &middot; lasts 1 minute</span></div>
-      <div class="ability-desc">Summon a perfect illusory copy of yourself in an unoccupied space within 30ft. While it persists, attackers cannot tell you apart — attack rolls against you have disadvantage. Use your bonus action each turn to move the duplicate up to 30ft. Cross off a square on page 1.</div>
+      <div class="ability-desc">Summon a perfect illusory copy of yourself in an unoccupied space within 30ft. While it persists, attackers cannot tell you apart &mdash; attack rolls against you have disadvantage. Use your bonus action each turn to move the duplicate up to 30ft. Cross off a square on page 1.</div>
     </div>
 
-    <div class="ability-row">
-      <div class="ability-title">Move Duplicate <span class="ability-tag">Bonus Action &middot; while Invoke Duplicity is active</span></div>
-      <div class="ability-desc">Move your illusory duplicate up to 30ft to any space you can see. Reposition it to keep attackers guessing or to flank alongside allies.</div>
-    </div>
 
     <hr>
     <div class="section-label">Weapons</div>

@@ -105,14 +105,14 @@
 
     <hr>
     <div class="section-label">Gear</div>
-    <div style="font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px;">Leather armour &middot; Shortsword &middot; Dagger (thrown 20/60ft) &middot; Shortbow</div>
+    <div style="font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px;">Leather armour &middot; Shortsword &middot; Longbow</div>
 
     <hr>
     <div class="section-label">Action Economy</div>
     <div class="action-grid">
       <div class="action-col">
         <div class="action-col-title">⚔ Action</div>
-        <div class="action-items">Shortsword<br>Shortbow<br>Hide</div>
+        <div class="action-items">Shortsword<br>Longbow<br>Hide</div>
         <div class="action-items general">Dash &middot; Dodge<br>Disengage &middot; Help</div>
       </div>
       <div class="action-col">
@@ -128,9 +128,14 @@
 
     <hr>
     <div class="section-label">Resources</div>
-    <div class="resource-box">
+    <div class="resource-box" style="margin-bottom: 6px;">
       <div class="resource-label">Assassinate</div>
       <div class="resource-desc">Cross off when used. Resets when combat ends.</div>
+      <div class="dot-row"><div class="dot"></div></div>
+    </div>
+    <div class="resource-box">
+      <div class="resource-label">Poisoned Blade</div>
+      <div class="resource-desc">Cross off when used. Recover on a short rest.</div>
       <div class="dot-row"><div class="dot"></div></div>
     </div>
 
@@ -148,16 +153,6 @@
     <div class="section-label">Class Abilities</div>
 
     <div class="ability-row">
-      <div class="ability-title">Shortsword <span class="ability-tag">Action &middot; melee 5ft</span></div>
-      <div class="ability-desc">Roll D20 + DEX vs AC to hit. On a hit, deal 1D6 + DEX piercing damage. Add Sneak Attack if the conditions below are met.</div>
-    </div>
-
-    <div class="ability-row">
-      <div class="ability-title">Shortbow <span class="ability-tag">Action &middot; range 80/320ft</span></div>
-      <div class="ability-desc">Roll D20 + DEX vs AC to hit. On a hit, deal 1D6 + DEX piercing damage. Add Sneak Attack if the conditions below are met. Attacks beyond 80ft are at disadvantage.</div>
-    </div>
-
-    <div class="ability-row">
       <div class="ability-title">Sneak Attack <span class="ability-tag">Passive &middot; once per turn</span></div>
       <div class="ability-desc">Once per turn, when you hit with a weapon attack and you have advantage on the roll OR an ally is within 5ft of the target, add 3D6 damage to that hit.</div>
     </div>
@@ -168,6 +163,11 @@
     </div>
 
     <div class="ability-row">
+      <div class="ability-title">Poisoned Blade <span class="ability-tag">Action &middot; declare before you roll &middot; 1 use / short rest</span></div>
+      <div class="ability-desc">Before making an attack, declare Poisoned Blade. On a hit, deal an additional 2D6 poison damage. The target makes a CON save (DC 13) or is poisoned until the end of their next turn — a poisoned creature has disadvantage on all attack rolls. Cross off the resource dot on page 1.</div>
+    </div>
+
+    <div class="ability-row">
       <div class="ability-title">Cunning Action <span class="ability-tag">Bonus Action</span></div>
       <div class="ability-desc">Use your bonus action to Dash, Disengage, or Hide instead of your action. This lets you strike and vanish, or move safely out of danger, in the same turn.</div>
     </div>
@@ -175,6 +175,19 @@
     <div class="ability-row">
       <div class="ability-title">Uncanny Dodge <span class="ability-tag">Reaction</span></div>
       <div class="ability-desc">When an attacker you can see hits you, use your reaction to halve the damage from that hit.</div>
+    </div>
+
+    <hr>
+    <div class="section-label">Weapons</div>
+
+    <div class="ability-row">
+      <div class="ability-title">Shortsword <span class="ability-tag">Action &middot; melee 5ft</span></div>
+      <div class="ability-desc">Roll D20 + DEX vs AC to hit. On a hit, deal 1D6 + DEX piercing damage. Add Sneak Attack if the conditions above are met.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Longbow <span class="ability-tag">Action &middot; range 150/600ft</span></div>
+      <div class="ability-desc">Roll D20 + DEX vs AC to hit. On a hit, deal 1D8 + DEX piercing damage. Add Sneak Attack if the conditions above are met. Attacks beyond 150ft are at disadvantage. Cannot be used when an enemy is within 5ft.</div>
     </div>
 
     <hr>
