@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Shepherd — Cleric · Life</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-serif: 'Crimson Pro', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --accent: #d97706;
+      --accent-light: #fffbeb;
+      --resource-border: #fcd34d;
+      --border: #e2e2e2;
+      --border-strong: #cccccc;
+      --text-primary: #111111;
+      --text-secondary: #444444;
+      --text-muted: #999999;
+      --bg-card: #f9f9f9;
+      --bg-general: #f4f4f4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #ebebeb; font-family: var(--font-sans); padding: 24px; display: flex; flex-direction: column; gap: 24px; align-items: center; }
+    .page { background: #ffffff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); padding: 26px; width: 100%; max-width: 680px; }
+    .section-label { font-family: var(--font-sans); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+    .header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1.5px solid var(--accent); }
+    .icon-box { width: 52px; height: 52px; border-radius: 8px; background: var(--accent-light); border: 1px solid var(--resource-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sub-tag { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+    .char-name { font-family: var(--font-serif); font-size: 24px; font-weight: 500; color: var(--text-primary); line-height: 1.2; }
+    .flavour { font-family: var(--font-serif); font-size: 12.5px; font-style: italic; line-height: 1.5; color: #666666; margin-top: 3px; }
+    .vitals { text-align: right; flex-shrink: 0; }
+    .vital-label { font-family: var(--font-sans); font-size: 10px; color: var(--text-muted); }
+    .vital-num { font-family: var(--font-sans); font-size: 26px; font-weight: 500; color: var(--text-primary); line-height: 1.1; }
+    .stat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 14px; }
+    .stat-box { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 6px; padding: 6px 4px; text-align: center; }
+    .stat-lbl { font-family: var(--font-sans); font-size: 9px; color: var(--accent); margin-bottom: 1px; }
+    .stat-val { font-family: var(--font-sans); font-size: 17px; font-weight: 500; color: var(--text-primary); }
+    .action-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+    .action-col { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 9px 11px; }
+    .action-col-title { font-family: var(--font-sans); font-size: 10px; font-weight: 500; color: var(--accent); margin-bottom: 6px; }
+    .action-items { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.8; }
+    .action-items.general { font-size: 10.5px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 6px; padding-top: 6px; }
+    .resource-box { background: var(--accent-light); border: 0.5px solid var(--resource-border); border-radius: 8px; padding: 10px 12px; }
+    .resource-label { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: var(--text-primary); }
+    .resource-desc { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+    .dot-row { display: flex; gap: 6px; margin-top: 8px; }
+    .dot { width: 17px; height: 17px; border-radius: 50%; border: 1.5px solid var(--accent); background: transparent; }
+    .dot-square { width: 17px; height: 17px; border-radius: 3px; border: 1.5px solid var(--accent); background: transparent; }
+    .hp-field { display: flex; align-items: baseline; gap: 6px; margin-top: 8px; }
+    .hp-line { display: inline-block; width: 80px; border-bottom: 1.5px solid #999; height: 20px; }
+    .hp-denom { font-family: var(--font-sans); font-size: 13px; color: var(--text-secondary); }
+    .hp-input { font-family: var(--font-sans); font-size: 22px; font-weight: 500; color: var(--text-primary); width: 72px; border: none; border-bottom: 1.5px solid #999; background: transparent; text-align: center; padding: 0 4px; outline: none; -moz-appearance: textfield; }
+    .hp-input::-webkit-inner-spin-button, .hp-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .ability-row { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 9px 11px; margin-bottom: 6px; }
+    .ability-row.general { background: var(--bg-general); border-color: var(--border); }
+    .ability-title { font-family: var(--font-sans); font-size: 12px; font-weight: 500; color: var(--text-primary); }
+    .ability-tag { font-family: var(--font-sans); font-size: 10px; font-weight: 400; color: var(--accent); margin-left: 6px; }
+    .ability-row.general .ability-tag { color: var(--text-muted); }
+    .ability-desc { font-family: var(--font-sans); font-size: 11px; line-height: 1.55; color: var(--text-secondary); margin-top: 3px; }
+    .ability-row.general .ability-title { color: #555555; }
+    .ability-row.general .ability-desc { color: var(--text-muted); }
+    .page-header { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .page-header span { color: var(--accent); }
+    @page { size: A4; margin: 0; }
+    @media print {
+      body { background: white; padding: 0; gap: 0; }
+      .page { page-break-after: always; border-radius: 0; box-shadow: none; max-width: 100%; width: 210mm; min-height: 297mm; padding: 14mm 16mm; }
+      .page:last-child { page-break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="header">
+      <div class="icon-box">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
+      </div>
+      <div style="flex:1;">
+        <div class="sub-tag">Cleric · Life Domain</div>
+        <div class="char-name">The Shepherd</div>
+        <div class="flavour">"You didn't come here to fight. But you will, if that's what it takes to keep everyone standing."</div>
+      </div>
+      <div class="vitals">
+        <div class="vital-label">AC</div>
+        <div class="vital-num">16</div>
+        <div class="vital-label" style="margin-top: 6px;">Spell DC 14</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-lbl">STR</div><div class="stat-val">+2</div></div>
+      <div class="stat-box"><div class="stat-lbl">DEX</div><div class="stat-val">+0</div></div>
+      <div class="stat-box"><div class="stat-lbl">CON</div><div class="stat-val">+2</div></div>
+      <div class="stat-box"><div class="stat-lbl">INT</div><div class="stat-val">+0</div></div>
+      <div class="stat-box"><div class="stat-lbl">WIS</div><div class="stat-val">+4</div></div>
+      <div class="stat-box"><div class="stat-lbl">CHA</div><div class="stat-val">+1</div></div>
+    </div>
+
+    <hr>
+    <div class="section-label">Gear</div>
+    <div style="font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px;">Scale mail &middot; Shield &middot; Mace</div>
+
+    <hr>
+    <div class="section-label">Action Economy</div>
+    <div class="action-grid">
+      <div class="action-col">
+        <div class="action-col-title">⚔ Action</div>
+        <div class="action-items">Mace<br>Cure Wounds<br>Bless<br>Spiritual Weapon<br>Guardian of Faith<br>Preserve Life</div>
+        <div class="action-items general">Dash &middot; Dodge<br>Disengage &middot; Help &middot; Hide</div>
+      </div>
+      <div class="action-col">
+        <div class="action-col-title">◈ Bonus</div>
+        <div class="action-items">Healing Word<br>Spiritual Weapon (attack)</div>
+      </div>
+      <div class="action-col">
+        <div class="action-col-title">↺ Reaction</div>
+        <div class="action-items general">Opportunity Attack</div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="section-label">Resources</div>
+    <div class="resource-box" style="margin-bottom: 6px;">
+      <div class="resource-label">Spells per day</div>
+      <div class="resource-desc">Cross off a circle when you cast a spell. Recover on a long rest.</div>
+      <div class="dot-row">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="resource-box">
+      <div class="resource-label">Channel Divinity</div>
+      <div class="resource-desc">Cross off a square when you use Preserve Life. Recover on a short rest.</div>
+      <div class="dot-row">
+        <div class="dot-square"></div><div class="dot-square"></div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="section-label">Current HP</div>
+    <div class="hp-field">
+      <div class="hp-line"></div>
+      <div class="hp-denom">/ 52</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-header"><span>The Shepherd</span> &nbsp;&middot;&nbsp; Cleric · Life &nbsp;&middot;&nbsp; Abilities</div>
+
+    <div class="section-label">Class Abilities</div>
+
+    <div class="ability-row">
+      <div class="ability-title">Healing Word <span class="ability-tag">Bonus Action &middot; costs 1 spell &middot; range 60ft</span></div>
+      <div class="ability-desc">One creature you can see regains 2D4 + WIS hit points. You can do this and still take your full action this turn.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Cure Wounds <span class="ability-tag">Action &middot; costs 1 spell &middot; touch</span></div>
+      <div class="ability-desc">Touch a creature. It regains 4D8 + WIS hit points. The bigger heal — use when someone is critically low and you can reach them safely.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Bless <span class="ability-tag">Action &middot; costs 1 spell &middot; concentration</span></div>
+      <div class="ability-desc">Choose up to 3 willing creatures within 30ft. For 1 minute, they each add 1D4 to every attack roll and saving throw. One of the best spells in combat — cast it early.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Spiritual Weapon <span class="ability-tag">Action &middot; costs 1 spell &middot; lasts 1 minute</span></div>
+      <div class="ability-desc">A spectral mace appears within 60ft. For the next minute, use your bonus action each turn to move it 20ft and attack one creature: D20 + WIS vs AC, 1D8 + WIS radiant damage on a hit. Does not require concentration.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Guardian of Faith <span class="ability-tag">Action &middot; costs 1 spell</span></div>
+      <div class="ability-desc">A towering spectral guardian appears in a space within 30ft. Any hostile creature that enters or starts its turn within 10ft of it must make a DEX save (DC 14) or take 20 radiant damage, half on success. The guardian vanishes after dealing 60 total damage.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Preserve Life <span class="ability-tag">Action &middot; Channel Divinity &middot; range 30ft</span></div>
+      <div class="ability-desc">Distribute 25 hit points among any number of creatures within 30ft. No creature can receive more than half its maximum HP from this. Cross off a square on page 1.</div>
+    </div>
+
+    <hr>
+    <div class="section-label">Weapons</div>
+
+    <div class="ability-row">
+      <div class="ability-title">Mace <span class="ability-tag">Action &middot; melee 5ft</span></div>
+      <div class="ability-desc">Roll D20 + STR vs AC to hit. On a hit, deal 1D6 + STR bludgeoning damage.</div>
+    </div>
+
+    <hr>
+    <div class="section-label">General Combat Actions</div>
+
+    <div class="ability-row general">
+      <div class="ability-title">Dash <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Gain an extra 30ft of movement this turn.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Dodge <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Until your next turn, attacks against you have disadvantage and you have advantage on DEX saves.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Disengage <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Your movement does not provoke opportunity attacks for the rest of this turn.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Opportunity Attack <span class="ability-tag">Reaction &middot; when an enemy leaves your reach</span></div>
+      <div class="ability-desc">Make one mace attack: D20 + STR vs AC, 1D6 + STR on a hit. Triggered when a creature moves out of your reach without Disengaging.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Help <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Give an ally advantage on their next ability check (within 5ft), or on their next attack against a creature within 5ft of you.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Hide <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Roll DEX (Stealth). If you succeed and are out of direct sight, you become hidden. Attacks against hidden targets are at disadvantage.</div>
+    </div>
+  </div>
+</body>
+</html>

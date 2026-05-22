@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Shroud — Rogue · Assassin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-serif: 'Crimson Pro', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --accent: #15803d;
+      --accent-light: #f0fdf4;
+      --resource-border: #86efac;
+      --border: #e2e2e2;
+      --border-strong: #cccccc;
+      --text-primary: #111111;
+      --text-secondary: #444444;
+      --text-muted: #999999;
+      --bg-card: #f9f9f9;
+      --bg-general: #f4f4f4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #ebebeb; font-family: var(--font-sans); padding: 24px; display: flex; flex-direction: column; gap: 24px; align-items: center; }
+    .page { background: #ffffff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); padding: 26px; width: 100%; max-width: 680px; }
+    .section-label { font-family: var(--font-sans); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+    .header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1.5px solid var(--accent); }
+    .icon-box { width: 52px; height: 52px; border-radius: 8px; background: var(--accent-light); border: 1px solid var(--resource-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sub-tag { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+    .char-name { font-family: var(--font-serif); font-size: 24px; font-weight: 500; color: var(--text-primary); line-height: 1.2; }
+    .flavour { font-family: var(--font-serif); font-size: 12.5px; font-style: italic; line-height: 1.5; color: #666666; margin-top: 3px; }
+    .vitals { text-align: right; flex-shrink: 0; }
+    .vital-label { font-family: var(--font-sans); font-size: 10px; color: var(--text-muted); }
+    .vital-num { font-family: var(--font-sans); font-size: 26px; font-weight: 500; color: var(--text-primary); line-height: 1.1; }
+    .stat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 14px; }
+    .stat-box { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 6px; padding: 6px 4px; text-align: center; }
+    .stat-lbl { font-family: var(--font-sans); font-size: 9px; color: var(--accent); margin-bottom: 1px; }
+    .stat-val { font-family: var(--font-sans); font-size: 17px; font-weight: 500; color: var(--text-primary); }
+    .action-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+    .action-col { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 9px 11px; }
+    .action-col-title { font-family: var(--font-sans); font-size: 10px; font-weight: 500; color: var(--accent); margin-bottom: 6px; }
+    .action-items { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.8; }
+    .action-items.general { font-size: 10.5px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 6px; padding-top: 6px; }
+    .resource-box { background: var(--accent-light); border: 0.5px solid var(--resource-border); border-radius: 8px; padding: 10px 12px; }
+    .resource-label { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: var(--text-primary); }
+    .resource-desc { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+    .dot-row { display: flex; gap: 6px; margin-top: 8px; }
+    .dot { width: 17px; height: 17px; border-radius: 50%; border: 1.5px solid var(--accent); background: transparent; }
+    .hp-field { display: flex; align-items: baseline; gap: 6px; margin-top: 8px; }
+    .hp-line { display: inline-block; width: 80px; border-bottom: 1.5px solid #999; height: 20px; }
+    .hp-denom { font-family: var(--font-sans); font-size: 13px; color: var(--text-secondary); }
+    .hp-input { font-family: var(--font-sans); font-size: 22px; font-weight: 500; color: var(--text-primary); width: 72px; border: none; border-bottom: 1.5px solid #999; background: transparent; text-align: center; padding: 0 4px; outline: none; -moz-appearance: textfield; }
+    .hp-input::-webkit-inner-spin-button, .hp-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .ability-row { background: var(--bg-card); border: 0.5px solid var(--border-strong); border-radius: 8px; padding: 9px 11px; margin-bottom: 6px; }
+    .ability-row.general { background: var(--bg-general); border-color: var(--border); }
+    .ability-title { font-family: var(--font-sans); font-size: 12px; font-weight: 500; color: var(--text-primary); }
+    .ability-tag { font-family: var(--font-sans); font-size: 10px; font-weight: 400; color: var(--accent); margin-left: 6px; }
+    .ability-row.general .ability-tag { color: var(--text-muted); }
+    .ability-desc { font-family: var(--font-sans); font-size: 11px; line-height: 1.55; color: var(--text-secondary); margin-top: 3px; }
+    .ability-row.general .ability-title { color: #555555; }
+    .ability-row.general .ability-desc { color: var(--text-muted); }
+    .page-header { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .page-header span { color: var(--accent); }
+    @page { size: A4; margin: 0; }
+    @media print {
+      body { background: white; padding: 0; gap: 0; }
+      .page { page-break-after: always; border-radius: 0; box-shadow: none; max-width: 100%; width: 210mm; min-height: 297mm; padding: 14mm 16mm; }
+      .page:last-child { page-break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="header">
+      <div class="icon-box">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 3l4 4-14 14-4-4z"/>
+          <path d="M3 21l4-1-3-3z"/>
+        </svg>
+      </div>
+      <div style="flex:1;">
+        <div class="sub-tag">Rogue · Assassin</div>
+        <div class="char-name">The Shroud</div>
+        <div class="flavour">"You were never in the room. Ask anyone."</div>
+      </div>
+      <div class="vitals">
+        <div class="vital-label">AC</div>
+        <div class="vital-num">15</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-lbl">STR</div><div class="stat-val">−1</div></div>
+      <div class="stat-box"><div class="stat-lbl">DEX</div><div class="stat-val">+4</div></div>
+      <div class="stat-box"><div class="stat-lbl">CON</div><div class="stat-val">+1</div></div>
+      <div class="stat-box"><div class="stat-lbl">INT</div><div class="stat-val">+2</div></div>
+      <div class="stat-box"><div class="stat-lbl">WIS</div><div class="stat-val">+2</div></div>
+      <div class="stat-box"><div class="stat-lbl">CHA</div><div class="stat-val">+1</div></div>
+    </div>
+
+    <hr>
+    <div class="section-label">Gear</div>
+    <div style="font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px;">Leather armour &middot; Shortsword &middot; Dagger (thrown 20/60ft) &middot; Shortbow</div>
+
+    <hr>
+    <div class="section-label">Action Economy</div>
+    <div class="action-grid">
+      <div class="action-col">
+        <div class="action-col-title">⚔ Action</div>
+        <div class="action-items">Shortsword<br>Shortbow<br>Hide</div>
+        <div class="action-items general">Dash &middot; Dodge<br>Disengage &middot; Help</div>
+      </div>
+      <div class="action-col">
+        <div class="action-col-title">◈ Bonus</div>
+        <div class="action-items">Cunning Action<br>(Dash / Disengage / Hide)</div>
+      </div>
+      <div class="action-col">
+        <div class="action-col-title">↺ Reaction</div>
+        <div class="action-items">Uncanny Dodge</div>
+        <div class="action-items general">Opportunity Attack</div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="section-label">Resources</div>
+    <div class="resource-box">
+      <div class="resource-label">Assassinate</div>
+      <div class="resource-desc">Cross off when used. Resets when combat ends.</div>
+      <div class="dot-row"><div class="dot"></div></div>
+    </div>
+
+    <hr>
+    <div class="section-label">Current HP</div>
+    <div class="hp-field">
+      <div class="hp-line"></div>
+      <div class="hp-denom">/ 38</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-header"><span>The Shroud</span> &nbsp;&middot;&nbsp; Rogue · Assassin &nbsp;&middot;&nbsp; Abilities</div>
+
+    <div class="section-label">Class Abilities</div>
+
+    <div class="ability-row">
+      <div class="ability-title">Shortsword <span class="ability-tag">Action &middot; melee 5ft</span></div>
+      <div class="ability-desc">Roll D20 + DEX vs AC to hit. On a hit, deal 1D6 + DEX piercing damage. Add Sneak Attack if the conditions below are met.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Shortbow <span class="ability-tag">Action &middot; range 80/320ft</span></div>
+      <div class="ability-desc">Roll D20 + DEX vs AC to hit. On a hit, deal 1D6 + DEX piercing damage. Add Sneak Attack if the conditions below are met. Attacks beyond 80ft are at disadvantage.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Sneak Attack <span class="ability-tag">Passive &middot; once per turn</span></div>
+      <div class="ability-desc">Once per turn, when you hit with a weapon attack and you have advantage on the roll OR an ally is within 5ft of the target, add 3D6 damage to that hit.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Assassinate <span class="ability-tag">Passive &middot; 1 use / combat</span></div>
+      <div class="ability-desc">On your first turn of combat, before anyone else has acted, you have advantage on all attack rolls. Any hit against a creature that has not yet taken a turn is an automatic critical — roll all damage dice twice. Cross off the resource dot on page 1.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Cunning Action <span class="ability-tag">Bonus Action</span></div>
+      <div class="ability-desc">Use your bonus action to Dash, Disengage, or Hide instead of your action. This lets you strike and vanish, or move safely out of danger, in the same turn.</div>
+    </div>
+
+    <div class="ability-row">
+      <div class="ability-title">Uncanny Dodge <span class="ability-tag">Reaction</span></div>
+      <div class="ability-desc">When an attacker you can see hits you, use your reaction to halve the damage from that hit.</div>
+    </div>
+
+    <hr>
+    <div class="section-label">General Combat Actions</div>
+
+    <div class="ability-row general">
+      <div class="ability-title">Dash <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Gain an extra 30ft of movement this turn.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Dodge <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Until your next turn, attacks against you have disadvantage and you have advantage on DEX saves.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Disengage <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Your movement does not provoke opportunity attacks for the rest of this turn.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Opportunity Attack <span class="ability-tag">Reaction &middot; when an enemy leaves your reach</span></div>
+      <div class="ability-desc">Make one shortsword attack: D20 + DEX vs AC, 1D6 + DEX on a hit. Triggered when a creature moves out of your reach without Disengaging.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Help <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Give an ally advantage on their next ability check (within 5ft), or on their next attack against a creature within 5ft of you.</div>
+    </div>
+    <div class="ability-row general">
+      <div class="ability-title">Hide <span class="ability-tag">Action</span></div>
+      <div class="ability-desc">Roll DEX (Stealth). If you succeed and are out of direct sight, you become hidden. Attacks against hidden targets are at disadvantage — and trigger Sneak Attack.</div>
+    </div>
+  </div>
+</body>
+</html>
